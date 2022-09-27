@@ -10,6 +10,7 @@ import { AuthContextProvider, useAuth } from 'context/AuthContext'
 import Generator from 'page/GeneratorPage'
 import Login from 'page/LoginPage'
 import './App.css'
+import Register from 'page/RegistrationPage'
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <AuthContextProvider>
         <Routes>
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route
             path="/"
             element={
