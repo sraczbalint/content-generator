@@ -1,28 +1,14 @@
-import { Button, FormControl, TextField } from '@mui/material'
-import { Box } from '@mui/system'
-import { useState } from 'react'
+import GeneratorContainer from 'container/GeneratorContainer/GeneratorContainer'
+import auth from 'context/Firebase'
 
-const Generator = () => {
-  const [input, setInput] = useState<string | null>(null)
-
-  console.log(input)
-
+const Login = () => {
+  console.log(auth.currentUser?.displayName)
   return (
     <>
-      <Box className="App">
-        <FormControl>
-          <TextField
-            id="outlined-basic"
-            defaultValue="Write some keyword"
-            variant="outlined"
-            onChange={(e) => setInput(e.target.value)}
-          />
-          <Button variant="contained">Contained</Button>
-        </FormControl>
-        <Box>Input</Box>
-      </Box>
+      <title>Generator</title>
+      <GeneratorContainer />
     </>
   )
 }
 
-export default Generator
+export default Login

@@ -1,4 +1,4 @@
-import LoginContainer from 'container/LoginContainer'
+import LoginContainer from 'container/LoginContainer/LoginContainer'
 
 const Login = () => {
   return (
