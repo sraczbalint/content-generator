@@ -1,7 +1,15 @@
 import { useState } from 'react'
 
-import { Button, FormControl, TextField } from '@mui/material'
+import {
+  Button,
+  FormControl,
+  Paper,
+  TextField,
+  Typography,
+} from '@mui/material'
 import { Box } from '@mui/system'
+
+import styles from './GeneratorContainer.module.scss'
 
 const GeneratorContainer = () => {
   const [input, setInput] = useState<string | null>(null)
@@ -9,17 +17,23 @@ const GeneratorContainer = () => {
   console.log(input)
 
   return (
-    <Box>
+    <Box className={styles.root}>
       <FormControl>
         <TextField
-          id="outlined-basic"
           label="Write some keyword"
           variant="outlined"
+          size="medium"
+          margin="normal"
           onChange={(e) => setInput(e.target.value)}
         />
         <Button variant="contained">Generate a post!</Button>
       </FormControl>
-      <Box>Input</Box>
+      <Typography marginTop={'20px'} fontSize={'medium'}>
+        Response from GPT-3 engine:
+      </Typography>
+      <Paper elevation={2} sx={{ minHeight: '200px', padding: '10px' }}>
+        ...please write some input...
+      </Paper>
     </Box>
   )
 }
