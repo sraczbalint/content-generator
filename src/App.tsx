@@ -1,27 +1,49 @@
-import { Button, FormControl, TextField } from '@mui/material'
-import { Box } from '@mui/system'
-import { useState } from 'react'
+import {
+  BrowserRouter,
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+} from 'react-router-dom'
+
+import { AuthContextProvider, useAuth } from 'context/AuthContext'
+import Generator from 'page/GeneratorPage'
+import Login from 'page/LoginPage'
 import './App.css'
 
 function App() {
-  const [input, setInput] = useState<string | null>(null)
-
-  console.log(input)
-
   return (
-    <Box className="App">
-      <FormControl>
-        <TextField
-          id="outlined-basic"
-          defaultValue="Write some keyword"
-          variant="outlined"
-          onChange={(e) => setInput(e.target.value)}
-        />
-        <Button variant="contained">Contained</Button>
-      </FormControl>
-      <Box>Input</Box>
-    </Box>
+    <BrowserRouter>
+      <AuthContextProvider>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/"
+            element={
+              <RequireAuth>
+                <Generator />
+              </RequireAuth>
+            }
+          />
+        </Routes>
+      </AuthContextProvider>
+    </BrowserRouter>
   )
+}
+
+function RequireAuth({ children }: { children: JSX.Element }) {
+  const auth = useAuth()
+  const location = useLocation()
+
+  if (!auth.user) {
+    // Redirect them to the /login page, but save the current location they were
+    // trying to go to when they were redirected. This allows us to send them
+    // along to that page after they login, which is a nicer user experience
+    // than dropping them off on the home page.
+    return <Navigate to="/" state={{ from: location }} replace />
+  }
+
+  return children
 }
 
 export default App
