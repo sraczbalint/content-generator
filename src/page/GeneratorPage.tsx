@@ -1,3 +1,4 @@
+import DashboardLayout from 'component/dashboardLayout/DashboardLayout'
 import GeneratorContainer from 'container/GeneratorContainer/GeneratorContainer'
 import auth from 'context/Firebase'
 
@@ -6,7 +7,9 @@ const Login = () => {
   return (
     <>
       <title>Generator</title>
-      <GeneratorContainer />
+      <DashboardLayout>
+        <GeneratorContainer />
+      </DashboardLayout>
     </>
   )
 }
