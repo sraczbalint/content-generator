@@ -1,20 +1,39 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 
 import {
   Button,
+  CircularProgress,
   FormControl,
   Paper,
   TextField,
   Typography,
 } from '@mui/material'
 import { Box } from '@mui/system'
+import { AxiosResponse } from 'axios'
+
+import { axiosPostCompletion } from 'component/api'
 
 import styles from './GeneratorContainer.module.scss'
 
 const GeneratorContainer = () => {
-  const [input, setInput] = useState<string | null>(null)
+  const [prompt, setPrompt] = useState<string | null>(null)
+  const [isLoading, setIslLoading] = useState<boolean>(false)
+  const [result, setResult] = useState<string | undefined>()
 
-  console.log(input)
+  const handleClick = async (e: React.MouseEvent<Element, MouseEvent>) => {
+    setIslLoading(true)
+    e.preventDefault()
+    console.log('containerpost', await axiosPostCompletion(prompt))
+
+    try {
+      await axiosPostCompletion(prompt).then((response: AxiosResponse) =>
+        setResult(response.data.result),
+      )
+    } catch (err) {
+      console.error(err)
+    }
+    setIslLoading(false)
+  }
 
   return (
     <Box className={styles.root}>
@@ -24,15 +43,24 @@ const GeneratorContainer = () => {
           variant="outlined"
           size="medium"
           margin="normal"
-          onChange={(e) => setInput(e.target.value)}
+          onChange={(e) => setPrompt(e.target.value)}
         />
-        <Button variant="contained">Generate a post!</Button>
+        <Button
+          variant="contained"
+          onClick={(e: React.MouseEvent<Element, MouseEvent>) => handleClick(e)}
+        >
+          {isLoading ? (
+            <CircularProgress size={25} sx={{ color: 'white' }} />
+          ) : (
+            'Generate a post!'
+          )}
+        </Button>
       </FormControl>
       <Typography marginTop={'20px'} fontSize={'medium'}>
         Response from GPT-3 engine:
       </Typography>
       <Paper elevation={2} sx={{ minHeight: '200px', padding: '10px' }}>
-        ...please write some input...
+        {result}
       </Paper>
     </Box>
   )
