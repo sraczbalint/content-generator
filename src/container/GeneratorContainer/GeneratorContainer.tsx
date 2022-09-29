@@ -14,8 +14,12 @@ import { AxiosResponse } from 'axios'
 import { axiosPostCompletion } from '../../component/api'
 import styles from './GeneratorContainer.module.scss'
 
+interface PromptProps {
+  prompt: string
+}
+
 const GeneratorContainer = () => {
-  const [prompt, setPrompt] = useState<string | null>(null)
+  const [prompt, setPrompt] = useState<PromptProps>({ prompt: '' })
   const [isLoading, setIslLoading] = useState<boolean>(false)
   const [result, setResult] = useState<string | undefined>()
 
@@ -37,11 +41,12 @@ const GeneratorContainer = () => {
     <Box className={styles.root}>
       <FormControl>
         <TextField
-          label="Write some keyword"
+          label="Write a short sentence"
+          placeholder="Please write a short post how we can use breacrumbs in the kitchen."
           variant="outlined"
           size="medium"
           margin="normal"
-          onChange={(e) => setPrompt(e.target.value)}
+          onChange={(e) => setPrompt({ prompt: e.target.value })}
         />
         <Button
           variant="contained"
