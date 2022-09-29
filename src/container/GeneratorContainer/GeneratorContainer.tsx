@@ -11,8 +11,7 @@ import {
 import { Box } from '@mui/system'
 import { AxiosResponse } from 'axios'
 
-import { axiosPostCompletion } from 'component/api'
-
+import { axiosPostCompletion } from '../../component/api'
 import styles from './GeneratorContainer.module.scss'
 
 const GeneratorContainer = () => {
@@ -23,7 +22,6 @@ const GeneratorContainer = () => {
   const handleClick = async (e: React.MouseEvent<Element, MouseEvent>) => {
     setIslLoading(true)
     e.preventDefault()
-    console.log('containerpost', await axiosPostCompletion(prompt))
 
     try {
       await axiosPostCompletion(prompt).then((response: AxiosResponse) =>
